@@ -12,8 +12,8 @@ sudo npm i -g bitcore-wallet-client
 sudo npm i -g bitcore-wallet-service
 
 cd node_modules/bitcore-wallet-service
-# update config file with this mongoDB uri: 
-# mongodb://heroku_xn39n9923n:5Dn493rn394nefd39@ds047592.mongolab.com:47592/heroku_xbt8wx9m
+update config file with this mongoDB uri: 
+mongodb://username:password@db.hostname.com:portnum/db
 npm start
 
 cd -
