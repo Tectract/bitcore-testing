@@ -26,10 +26,40 @@ client.seedFromExtendedPrivateKey(xpriv0.toString());
 
 client.createWallet("WalletOne", "WalletNumberOne", 2, 3, {network: 'livenet'}, function(err, secret) {
   if(err){
-    console.err("saw secret: " + secret + " and err: " + err);
+    console.error("saw secret: " + secret + " and err: " + err);
   } else {
     console.log('Wallet Created. Share this secret with your copayers: ' + secret);
-    fs.writeFileSync('WalletOne.dat', client.export());
+
+//    var tempObj = { doNotVerify : true };
+//    client.getMainAddresses(tempObj,function(err,resp){
+//      if(err){
+//        console.log(err);
+//      } else {
+//        for( var i in resp){
+//          console.log("wallet address i : " + i);	
+//        }
+//        fs.writeFileSync('WalletOne.dat', client.export());
+//      }
+//    });
+
+    client.openWallet(function(err,success){
+      if(err) {
+        console.log(err);
+      } else {
+        if(success){
+          console.log("wallet opened!");
+        } else {
+          console.log("unable to open wallet!");
+        }
+      }
+    }); 
+    client.getStatus(function(err,resp){
+      if(err){
+        console.log(err);
+      } else {
+        console.log("saw wallet status : " + JSON.stringify(resp))
+      }
+    });
   }
 });
 
