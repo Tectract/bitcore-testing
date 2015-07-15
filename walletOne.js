@@ -42,17 +42,17 @@ client.createWallet("WalletOne", "WalletNumberOne", 2, 3, {network: 'livenet'}, 
 //      }
 //    });
 
-    client.openWallet(function(err,success){
-      if(err) {
-        console.log(err);
-      } else {
-        if(success){
-          console.log("wallet opened!");
-        } else {
-          console.log("unable to open wallet!");
-        }
-      }
-    }); 
+//    client.openWallet(function(err,success){
+//      if(err) {
+//        console.log(err);
+//      } else {
+//        if(success){
+//          console.log("wallet opened!");
+//        } else {
+//          console.log("unable to open wallet!");
+//        }
+//      }
+//    }); 
     client.getStatus(function(err,resp){
       if(err){
         console.log(err);

@@ -28,9 +28,11 @@ cd -
 
 # to run the tests
 
-node walletTest.js   # to run the bitcore test script against your locally running bitcore-wallet-service
+node walletOne.js   # to run the bitcore test script against your locally running bitcore-wallet-service
 
+node walletTwo.js [wallet_join_secret]
 
+node walletThree.js [wallet_join_secret]
 
 
 
