@@ -4,11 +4,12 @@ var Bitcore = require('bitcore');
 delete global._bitcore; //workaround for namespace conflict
 var Client = require('bitcore-wallet-client');
 var fs = require('fs');
-var BWS_INSTANCE_URL = 'http://localhost:3232/bws/api'
+var BWS_INSTANCE_HOST = 'http://localhost:3232'
+var BWS_INSTANCE_URL = BWS_INSTANCE_HOST + '/bws/api'
 
 var client = new Client({
   baseUrl: BWS_INSTANCE_URL,
-  verbose: true,
+  verbose: false,
 });
 
 var code = new Mnemonic(Mnemonic.Words.ENGLISH);
@@ -24,23 +25,39 @@ console.log("private key validity : " + Bitcore.HDPrivateKey.isValidSerialized(x
 
 client.seedFromExtendedPrivateKey(xpriv0.toString());
 
-client.createWallet("WalletOne", "WalletNumberOne", 2, 3, {network: 'livenet'}, function(err, secret) {
+client.createWallet("WalletOne", "WalletNumberOne", 1, 1, {network: 'livenet'}, function(err, secret) {
   if(err){
-    console.error("saw secret: " + secret + " and err: " + err);
+    console.error("saw secret: " + secret + " and err: " + JSON.stringify(err));
   } else {
     console.log('Wallet Created. Share this secret with your copayers: ' + secret);
 
-//    var tempObj = { doNotVerify : true };
-//    client.getMainAddresses(tempObj,function(err,resp){
-//      if(err){
-//        console.log(err);
-//      } else {
-//        for( var i in resp){
-//          console.log("wallet address i : " + i);	
-//        }
-//        fs.writeFileSync('WalletOne.dat', client.export());
-//      }
-//    });
+    client.createAddress(function(err,address){
+      if(err) {
+        console.log(err);
+      } else {
+        if(address){
+          console.log("address generated : " + JSON.stringify(address));
+          var tempObj = { doNotVerify : true };
+          client.getMainAddresses(tempObj,function(err,resp){
+            if(err){
+              console.log(err);
+            } else {
+              console.log("saw number of wallet addresses: " + resp.length)
+              for( var i in resp){
+                console.log("wallet address " + i + " : " + JSON.stringify(resp[i]));
+              }
+              if(!fs.writeFileSync('WalletOne.dat', client.export())) {
+                console.log("Wallet file: WalletNumberOne.dat saved!");
+              } else {
+                console.log("UNABLE TO SAVE Wallet file: WalletNumberOne.dat!");
+              }
+            }
+          });
+        } else {
+          console.log("unable to generate address! Wallet file not saved.");
+        }
+      }
+    });
 
 //    client.openWallet(function(err,success){
 //      if(err) {
@@ -52,15 +69,15 @@ client.createWallet("WalletOne", "WalletNumberOne", 2, 3, {network: 'livenet'}, 
 //          console.log("unable to open wallet!");
 //        }
 //      }
-//    }); 
-    client.getStatus(function(err,resp){
-      if(err){
-        console.log(err);
-      } else {
-        console.log("saw wallet status : " + JSON.stringify(resp))
-      }
-    });
+//    });
+
+      thisOpts = {includeExtendedInfo : true};
+//    client.getStatus(function(err,resp){
+//      if(err){
+//        console.log(err);
+//      } else {
+//        console.log("saw wallet status : " + JSON.stringify(resp))
+//      }
+//    });
   }
 });
-
-

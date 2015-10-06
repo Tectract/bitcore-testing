@@ -1,0 +1,15 @@
+{
+  "name": "bridge21-bitcore-test-suite",
+  "version": "0.0.1",
+  "description": "bridge21-bitcore-test-suite node dependencies",
+  "dependencies": {     
+    "bitcore-mnemonic" : "latest",
+    "bitcore" : "latest",
+    "bitcore-wallet-client" : "git+https://github.com/bridge21/bitcore-wallet-client.git#dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bridge21/bitcore-wallet-client.git"
+  },
+  "homepage": "https://github.com/bridge21/bridge21-bitcore-test-suite"
+}
